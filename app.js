@@ -6,11 +6,10 @@ const mongoose = require('mongoose')
 const user = require('./routes/user');
 const signin = require('./routes/signin');
 const signup = require('./routes/signup');
-const photo = require('./routes/photo');
-const search = require('./routes/search')
+const house = require('./routes/house')
 
 require('dotenv').config()
-mongoose.connection.openUri(process.env.DATABAS, { useMongoClient: true });
+mongoose.connection.openUri(process.env.DATABAS);
 mongoose.Promise = global.Promise;
 mongoose.connection.once('open', () => {
   console.log('mongoose connection success');
@@ -28,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/users', user);
 app.use('/api/signin', signin)
 app.use('/api/signup', signup)
+app.use('/api/houses', house)
 
 
 // catch 404 and forward to error handler
