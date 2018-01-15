@@ -10,8 +10,10 @@ router.post('/', authentification,
   uploadImages.multer.array('image'),
   uploadImages.uploadAllFiles,
   House.create)
-router.put('/:id', authentification, House.update)
+router.put('/:id', authentification,
+  uploadImages.multer.array('image'),
+  uploadImages.uploadAllFiles,
+  House.update)
 router.delete('/:id', authentification, House.destroy)
 router.get('/user/:id', authentification, House.getUserHouses)
-
 module.exports = router

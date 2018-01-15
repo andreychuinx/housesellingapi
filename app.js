@@ -7,6 +7,7 @@ const user = require('./routes/user');
 const signin = require('./routes/signin');
 const signup = require('./routes/signup');
 const house = require('./routes/house')
+const search = require('./routes/search')
 
 require('dotenv').config()
 mongoose.connection.openUri(process.env.DATABAS);
@@ -28,6 +29,7 @@ app.use('/api/users', user);
 app.use('/api/signin', signin)
 app.use('/api/signup', signup)
 app.use('/api/houses', house)
+app.use('/api/search', search)
 
 
 // catch 404 and forward to error handler

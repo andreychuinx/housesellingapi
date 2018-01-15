@@ -24,6 +24,8 @@ class HouseController {
       })
   }
 
+  
+
   static getUserHouses(req, res) {
     HouseModel.find({ userId: req.params.id })
       .populate('userId')
@@ -104,13 +106,31 @@ class HouseController {
   }
 
   static update(req, res) {
-    let { caption } = req.body
-    PhotoModel.findOneAndUpdate(
+    let objHouse = {
+      title: req.body.title,
+      description: req.body.description,
+      property: req.body.property,
+      harga: req.body.harga,
+      kamarTidur: req.body.kamarTidur,
+      jumlahLantai: req.body.jumlahLantai,
+      kamarMandi: req.body.kamarMandi,
+      sertificate: req.body.sertificate,
+      luasTanah: req.body.luasTanah,
+      luasBangunan: req.body.luasBangunan,
+      userId: req.decoded.userId,
+      photos: req.photos,
+      address: req.body.address,
+      loc: {
+        type: 'Point',
+        coordinates: [Number(req.body.longitude), Number(req.body.latitude)],
+      },
+    }
+    HouseModel.findOneAndUpdate(
       {
         _id: req.params.id,
         userId: req.decoded.userId,
       },
-      { caption },
+      objHouse,
       {
         new: true,
       }
@@ -120,13 +140,13 @@ class HouseController {
       })
       .then(result => {
         res.status(HttpStatus.OK).json({
-          messages: 'Photo Updated',
+          messages: 'House Updated',
           data: result,
         })
       })
       .catch(err => {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-          messages: 'Update Photo Error Server',
+          messages: 'House Error Server',
           data: err,
           error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR),
         })
